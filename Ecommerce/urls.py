@@ -15,13 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.auth.views import login, logout
 
-from core.views import index, contact, product, product_list
+from core.views import index, contact, register
 
 urlpatterns = [
 	url(r'^$', index, name='index'),
+    url(r'^entrar/$', login, {'template_name':'login.html'}, name='login'),
+    url(r'^registro/$', register, name='register'),
+    url(r'^sair/$', logout, {'next_page':'index'}, name='logout'),
+    url(r'^catalogo/', include('catalog.urls', namespace='catalog')),
+    url(r'^usuarios/', include('accounts.urls', namespace="accounts")),
 	url(r'^contato/$', contact, name='contact'),
-	url(r'^produtos/$', product_list, name='product_list'),
-	url(r'^produto/$', product, name='product'),
     url(r'^admin/', admin.site.urls),
 ]

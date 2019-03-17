@@ -15,7 +15,7 @@ import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.dirname(os.path.obspath(__file__))
+#PROJECT_ROOT = os.path.dirname(os.path.obspath(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'core',
+    'catalog',
+    'accounts',
+    #libs
+    'widget_tweaks',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -67,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #apps
+                'catalog.context_processors.categories',
             ],
         },
     },
@@ -118,12 +124,38 @@ USE_L10N = True
 
 USE_TZ = True
 
+#messages | Personalisando as message
+from django.contrib.messages import constants as message
+
+MESSAGE_TAGS = {
+    message.DEBUG: 'alert-info',
+    message.INFO: 'alert-info',
+    message.SUCCESS: 'alert-success',
+    message.WARNING: 'alert-warning',
+    message.ERROR:'alert-danger',
+}
+
+#sistema de usuarios
+LOGIN_URL= 'login'
+LOGIN_REDIRECT_URL = 'accounts:index'
+LOGOUT_URL = 'index'
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
 
+#sistema de envio de e-mail
+#EMAIL_HOST = ''
+#EMAIL_HOST_USER = ''
+#EMAIL_HOST_PASSWORD = ''
+DEFAULT_FROM_EMAIL = 'django@ecommerce.com'
+#test
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+'''
 #banco de dados para o heroku
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
@@ -134,3 +166,5 @@ ALLOWED_HOSTS = ['*']
 
 #Arquivos estaticos para heroku
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+
+'''
